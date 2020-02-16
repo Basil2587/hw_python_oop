@@ -7,6 +7,7 @@ class Record:
           self.date =  dt.datetime.strptime(date, date_format).date() if date else dt.date.today()
           self.comment = comment
 
+
 class Calculator:
      def __init__(self, limit):
           self.limit = limit
@@ -16,21 +17,15 @@ class Calculator:
           self.records.append(Record)
 
      def get_today_stats(self):
-          sum_day = 0
           date_now = dt.datetime.now().date()
-          for notes in self.records:
-               if notes.date == date_now:
-                   sum_day = sum_day + int(notes.amount)    
+          sum_day = sum([notes.amount for notes in self.records if notes.date == date_now])      
           return sum_day
      def get_week_stats(self):
-          sum_week = 0
           date_now = dt.datetime.now().date()
           timedelta = date_now - dt.timedelta(6)
-          for notes in self.records:
-               if timedelta <= notes.date <= date_now:
-                    sum_week = sum_week + int(notes.amount)
+          sum_week = sum([notes.amount for notes in self.records if timedelta <= notes.date <= date_now])         
           return sum_week
-
+          
 class CashCalculator(Calculator):
      USD_RATE = 63.0
      EURO_RATE = 68.7
@@ -65,7 +60,3 @@ class CaloriesCalculator(Calculator):
           else:
                answer = 'Хватит есть!'
           return answer           
-
-
-
-
