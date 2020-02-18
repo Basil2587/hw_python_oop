@@ -37,25 +37,25 @@ class CashCalculator(Calculator):
                       'usd': (self.USD_RATE, 'USD'),
                       'eur': (self.EURO_RATE, 'Euro'),
           }
-          a, b = exchange[currency] 
-          money = round((self.limit - total)/a,2)
+          rate, coin = exchange[currency] 
+          money = round((self.limit-total)/rate,2)
           if total < self.limit:
-               answer = F'На сегодня осталось {money} {b}'
+               answer = f'На сегодня осталось {money} {coin}'
           elif total == self.limit: 
                answer = 'Денег нет, держись'
           else:
                if money < 0:
                     money = abs(money)
-                    answer = F'Денег нет, держись: твой долг - {money} {b}'     
+                    answer = f'Денег нет, держись: твой долг - {money} {coin}'     
           return answer
 
 
 class CaloriesCalculator(Calculator):
           
      def get_calories_remained(self):
-          lim_calories = self.limit - self.get_today_stats()
+          lim_calories = self.limit-self.get_today_stats()
           if lim_calories > 0:
-               answer = F'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {lim_calories} кКал'
+               answer = f'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {lim_calories} кКал'
           else:
                answer = 'Хватит есть!'
           return answer
